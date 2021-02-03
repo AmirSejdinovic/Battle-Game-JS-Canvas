@@ -14,6 +14,36 @@ canvas.style.border ="1px solid black";
 //Init of canvas objact
 const ctx = canvas.getContext('2d');
 
+const player = {x:10,y:canvas.height/2,size:30,speed:5};
+const game  = {req:''};
+console.log(player);
+
+/*for(let i =0; i<10; i++){
+   drawmove(i);
+}
+*/
+
+game.req = requestAnimationFrame(draw);
+canvas.addEventListener('click',()=>{
+   player.speed *= -1;
+})
+
+
+
+function draw(){
+
+   ctx.clearRect(0,0,canvas.width,canvas.height);
+   console.log(player.x);
+   
+   player.x += player.speed;
+   ctx.beginPath();
+   ctx.fillStyle = 'red';
+   ctx.arc(player.x,player.y,player.size,0,Math.PI*2);
+   ctx.fill();
+   ctx.fillStyle = 'blue';
+   ctx.fillRect(player.x,player.y,5,5);
+   game.req = requestAnimationFrame(draw);
+}
 
 
 //Calling the function
@@ -59,7 +89,7 @@ function drawpath(){
 }
 
 //Creating the function
-function draw(){
+function draw2(){
 
   ctx.fillRect(5,10,50,30);
   ctx.strokeRect(150,10,50,30);
