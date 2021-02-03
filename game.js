@@ -1,7 +1,7 @@
 //Creating html element
 const canvas = document.createElement('canvas');
 //Creating grid varaiable
-const grid = 25;
+const grid = 50;
 
 //Determinate the width of the canvas
 canvas.setAttribute('width', grid*20);
@@ -9,6 +9,7 @@ canvas.setAttribute('width', grid*20);
 canvas.setAttribute('height', grid*15);
 //Attach the HTML element with body tag of html 
 document.body.prepend(canvas);
+canvas.style.border ="1px solid black";
 
 //Init of canvas objact
 const ctx = canvas.getContext('2d');
@@ -16,7 +17,27 @@ const ctx = canvas.getContext('2d');
 
 
 //Calling the function
-drawpath();
+drawcir();
+
+function drawcir(){
+
+   ctx.beginPath();
+   ctx.fillStyle = 'yellow';
+   ctx.arc(300,100,50,0,Math.PI*2,true);
+   ctx.fill();
+
+   ctx.beginPath();
+   ctx.fillStyle = 'black';
+   ctx.moveTo(300,80);
+   ctx.arc(280,80,10,0,Math.PI*2,true);
+
+   ctx.moveTo(335,80);
+   ctx.arc(320,80,10,0,Math.PI*2,true);
+
+   ctx.moveTo(340,110);
+   ctx.arc(300,110,30,0,Math.PI,false);
+   ctx.fill();
+}
 
 //Function for red triangle
 function drawpath(){
