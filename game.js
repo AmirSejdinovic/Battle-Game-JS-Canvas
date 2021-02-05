@@ -14,13 +14,13 @@ canvas.style.border ="1px solid black";
 //Init of canvas objact
 const ctx = canvas.getContext('2d');
 const players = [
-   {x:10,
+   {x:canvas.width/2 + (grid*2),
    y:canvas.height/2,
    size:30,
    speed:5,
    color:'red'},
    {
-   x:10,
+   x:canvas.width/2 - (grid*2),
    y:canvas.height/2,
    size:30,
    speed:5,
@@ -70,15 +70,15 @@ game.req = requestAnimationFrame(draw);
 
 
 function movmentPlayer(){
-   if(keyz['ArrowLeft']){players[0].x -= players[0].speed;}
-   if(keyz['ArrowRight']){players[0].x += players[0].speed;}
-   if(keyz['ArrowUp']){players[0].y -= players[0].speed;}
-   if(keyz['ArrowDown']){players[0].y += players[0].speed;}
+   if(keyz['ArrowLeft'] && players[0].x > canvas.width/2+players[0].size){players[0].x -= players[0].speed;}
+   if(keyz['ArrowRight'] && players[0].x < canvas.width-players[0].size){players[0].x += players[0].speed;}
+   if(keyz['ArrowUp'] && players[0].y > players[0].size){players[0].y -= players[0].speed;}
+   if(keyz['ArrowDown'] && players[0].y < canvas.height - players[0].size){players[0].y += players[0].speed;}
 
-   if(keyz['KeyA']){players[1].x -= players[1].speed;}
-   if(keyz['KeyS']){players[1].x += players[1].speed;}
-   if(keyz['KeyW']){players[1].y -= players[1].speed;}
-   if(keyz['KeyZ']){players[1].y += players[1].speed;}
+   if(keyz['KeyA'] && players[1].x > players[1].size){players[1].x -= players[1].speed;}
+   if(keyz['KeyS'] && players[1].x < canvas.width/2-players[1].size){players[1].x += players[1].speed;}
+   if(keyz['KeyW'] && players[1].y > players[1].size){players[1].y -= players[1].speed;}
+   if(keyz['KeyZ'] && players[1].y < canvas.height - players[1].size){players[1].y += players[1].speed;}
 
    
 }
@@ -88,6 +88,11 @@ function draw(){
    ctx.clearRect(0,0,canvas.width,canvas.height);
    //console.log(player.x);
     movmentPlayer();
+
+    ctx.beginPath();
+    ctx.moveTo(canvas.width/2,0);
+    ctx.lineTo(canvas.width/2,canvas.height);
+    ctx.stroke();
 
    players.forEach((player)=>{
       ctx.beginPath();
