@@ -16,6 +16,23 @@ const ctx = canvas.getContext('2d');
 
 const player = {x:10,y:canvas.height/2,size:30,speed:5};
 const game  = {req:''};
+
+const keyz = {ArrowLeft:false,ArrowRight:false,ArrowUp:false,ArrowDown:false};
+
+document.addEventListener('keydown',(e)=>{
+   if(e.code in keyz){
+      keyz[e.code] = true;
+   }
+   
+   console.log(keyz);
+});
+
+document.addEventListener('keyup',(e)=>{
+   if(e.code in keyz){
+      keyz[e.code] = false;
+   }
+    console.log(keyz);
+});
 console.log(player);
 
 /*for(let i =0; i<10; i++){
@@ -28,14 +45,20 @@ canvas.addEventListener('click',()=>{
    player.speed *= -1;
 })
 
-
+function movmentPlayer(){
+   if(keyz['ArrowLeft']){player.x -= player.speed;}
+   if(keyz['ArrowRight']){player.x += player.speed;}
+   if(keyz['ArrowUp']){player.y -= player.speed;}
+   if(keyz['ArrowDown']){player.y += player.speed;}
+}
 
 function draw(){
 
    ctx.clearRect(0,0,canvas.width,canvas.height);
-   console.log(player.x);
+   //console.log(player.x);
+    movmentPlayer();
    
-   player.x += player.speed;
+   //player.x += player.speed;
    ctx.beginPath();
    ctx.fillStyle = 'red';
    ctx.arc(player.x,player.y,player.size,0,Math.PI*2);
