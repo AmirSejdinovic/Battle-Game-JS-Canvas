@@ -79,6 +79,8 @@ document.addEventListener('keydown',(e)=>{
              color: 'lightblue'
           })
    }
+
+   
    
    //console.log(keyz);
 });
@@ -88,6 +90,12 @@ document.addEventListener('keyup',(e)=>{
       keyz[e.code] = false;
    }
     //console.log(keyz);
+
+    if(e.code == 'KeyM'){
+      console.log(players[0].x, players[0].y);
+      console.log(players[1].x, players[1].y);
+      colDec(players[0],players[1]);
+   }
 });
 //console.log(player);
 
@@ -96,11 +104,23 @@ document.addEventListener('keyup',(e)=>{
 }
 */
 
+
+
 game.req = requestAnimationFrame(draw);
 
+function colDec(a,b){
+    
+    //let boo = a.x < b.x + b.size*2 && a.x + a.size*2 > b.x && a.y < b.y + b.size*2 && a.y + a.size*2 > b.y; 
+    //console.log(a.x, (b.x+b.size*2));
+    //console.log(booH);
+    //console.log(booV);
+    //console.log(boo);
+    return a.x < b.x + b.size && a.x + a.size*2 > b.x && a.y < b.y + b.size*2 && a.y + a.size*2 > b.y;
+}
 
 function movmentPlayer(){
-   if(keyz['ArrowLeft'] && players[0].x > canvas.width/2+players[0].size){players[0].x -= players[0].speed;}
+   //if(keyz['ArrowLeft'] && players[0].x > canvas.width/2+players[0].size){players[0].x -= players[0].speed;}
+   if(keyz['ArrowLeft'] && players[0].x > 0){players[0].x -= players[0].speed;}
    if(keyz['ArrowRight'] && players[0].x < canvas.width-players[0].size){players[0].x += players[0].speed;}
    if(keyz['ArrowUp'] && players[0].y > players[0].size){players[0].y -= players[0].speed;}
    if(keyz['ArrowDown'] && players[0].y < canvas.height - players[0].size){players[0].y += players[0].speed;}
@@ -126,6 +146,13 @@ function draw(){
        if(bull.x<0){
            game.bullets.splice(index, 1);
        }
+       
+       players.forEach((player, i)=>{
+         if(colDec(bull,player)){
+            console.log('HIT Player'+player.color + '' +i);
+            game.bullets.splice(index, 1);
+         };
+       })
 
     })
 
