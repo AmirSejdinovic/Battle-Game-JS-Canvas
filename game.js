@@ -20,6 +20,8 @@ const players = [
    speed:5,
    color:'red',
    cooldown: 0,
+   score: 0,
+   pos: canvas.width /2+(canvas.width /4)
 },
    {
    x:canvas.width/2 - (grid*2),
@@ -27,7 +29,9 @@ const players = [
    size:30,
    speed:5,
    color:'blue',
-   cooldown: 0
+   cooldown: 0,
+   score:0,
+   pos: canvas.width/4
 }
 
 
@@ -150,6 +154,11 @@ function draw(){
        players.forEach((player, i)=>{
          if(colDec(bull,player)){
             console.log('HIT Player'+player.color + '' +i);
+            if(i==0){
+               players[1].score++;
+            }else{
+               players[0].score++;
+            }
             game.bullets.splice(index, 1);
          };
        })
@@ -162,9 +171,17 @@ function draw(){
     ctx.stroke();
 
    players.forEach((player)=>{
-      if(player.cooldown > 0){player.cooldown--;}
+      if(player.cooldown > 0){
+
+         player.cooldown--;
+      
+      }
+      ctx.fillStyle = player.color;
+      ctx.font = '48px serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('Score:'+player.score, player.pos,50);
       ctx.beginPath();
-   ctx.fillStyle = player.color;
+  
    ctx.arc(player.x,player.y,player.size,0,Math.PI*2);
    ctx.fill();
    })
