@@ -14,23 +14,23 @@ canvas.style.border ="1px solid black";
 //Init of canvas objact
 const ctx = canvas.getContext('2d');
 const players = [
-   {x:canvas.width/2 + (grid*2),
-   y:canvas.height/2,
-   size:30,
-   speed:5,
+   {x:canvas.width/2 + (grid*4),
+   
+   
+   
    color:'red',
-   cooldown: 0,
-   score: 0,
+  
+ 
    pos: canvas.width /2+(canvas.width /4)
 },
    {
-   x:canvas.width/2 - (grid*2),
-   y:canvas.height/2,
-   size:30,
-   speed:5,
+   x:canvas.width/2 - (grid*4),
+   
+   
+  
    color:'blue',
-   cooldown: 0,
-   score:0,
+ 
+  
    pos: canvas.width/4
 }
 
@@ -56,6 +56,20 @@ const keyz = {
    KeyW:false
 
 };
+
+canvas.addEventListener('click',startGame);
+
+function startGame(){
+   cancelAnimationFrame(game.req);
+   players.forEach((player)=>{
+      player.score = 0;
+      player.cooldown = 100;
+      player.speed = 5;
+      player.size = 30;
+      player.y = canvas.height /2;
+   })
+   game.req = requestAnimationFrame(draw);
+}
 
 document.addEventListener('keydown',(e)=>{
    console.log(e);
@@ -110,7 +124,7 @@ document.addEventListener('keyup',(e)=>{
 
 
 
-game.req = requestAnimationFrame(draw);
+//game.req = requestAnimationFrame(draw);
 
 function colDec(a,b){
     
@@ -119,7 +133,7 @@ function colDec(a,b){
     //console.log(booH);
     //console.log(booV);
     //console.log(boo);
-    return a.x < b.x + b.size && a.x + a.size*2 > b.x && a.y < b.y + b.size*2 && a.y + a.size*2 > b.y;
+    return a.x < b.x + b.size && a.x + a.size*2 > b.x && a.y < b.y - b.size + b.size * 2 && a.y + a.size > b.y-b.size;
 }
 
 function movmentPlayer(){
