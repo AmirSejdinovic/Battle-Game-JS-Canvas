@@ -3,6 +3,12 @@ const canvas = document.createElement('canvas');
 //Creating grid varaiable
 const grid = 50;
 
+const mind = {
+   thinking:false,
+   dir: 5,
+   count: 0
+};
+
 //Determinate the width of the canvas
 canvas.setAttribute('width', grid*20);
 //Determinate the height of canvas
@@ -13,6 +19,28 @@ canvas.style.border ="1px solid black";
 
 //Init of canvas objact
 const ctx = canvas.getContext('2d');
+
+const btn = document.createElement('button');
+btn.style.display = 'block';
+btn.textContent = 'Turn On';
+document.body.prepend(btn);
+btn.style.backgroundColor = 'red';
+btn.style.color = 'white';
+btn.style.padding = '10px';
+
+btn.addEventListener('click', (e)=>{
+   console.log(mind);
+  if(!mind.thinking){
+     mind.thinking = true;
+     btn.textContent = "Turn Off";
+     btn.style.backgroundColor = 'green';
+  }else{
+    mind.thinking = false;
+    btn.textContent = "Turn On";
+    btn.style.backgroundColor = "red"
+  }
+});
+
 const players = [
    {x:canvas.width/2 + (grid*4),
    
@@ -137,6 +165,34 @@ function colDec(a,b){
 }
 
 function movmentPlayer(){
+
+
+   if(mind.thinking){
+      
+      if(mind.count > 0){
+         mind.count--;
+      }else{
+         let val = Math.floor(Math.random()*20);
+        mind.count = 30;
+        if(players[1].y +val < players[0].y){
+
+         mind.dir = players[1].speed;
+      }else if(players[1].y + val > players[0].y){
+         mind.dir = -players[1].speed;
+     
+      }
+   }
+   players[1].y += mind.dir;
+
+
+     /* if(players[1].y +val < players[0].y){
+         players[1].y += players[1].speed;
+      }else if(players[1].y + val > players[0].y){
+         players[1].y -= players[1].speed;
+      }*/
+   
+   }
+
    //if(keyz['ArrowLeft'] && players[0].x > canvas.width/2+players[0].size){players[0].x -= players[0].speed;}
    if(keyz['ArrowLeft'] && players[0].x > 0){players[0].x -= players[0].speed;}
    if(keyz['ArrowRight'] && players[0].x < canvas.width-players[0].size){players[0].x += players[0].speed;}
