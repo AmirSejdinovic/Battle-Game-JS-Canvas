@@ -64,8 +64,8 @@ function startGame(){
    players.forEach((player)=>{
       player.score = 0;
       player.cooldown = 100;
-      player.speed = 5;
-      player.size = 30;
+      player.speed = Math.ceil(grid/8);
+      player.size = grid/2+5;
       player.y = canvas.height /2;
    })
    game.req = requestAnimationFrame(draw);
@@ -191,9 +191,9 @@ function draw(){
       
       }
       ctx.fillStyle = player.color;
-      ctx.font = '48px serif';
+      ctx.font = grid+'px serif';
       ctx.textAlign = 'center';
-      ctx.fillText('Score:'+player.score, player.pos,50);
+      ctx.fillText('Score:'+player.score, player.pos,grid);
       ctx.beginPath();
   
    ctx.arc(player.x,player.y,player.size,0,Math.PI*2);
