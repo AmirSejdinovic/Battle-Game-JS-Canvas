@@ -5,7 +5,8 @@ const grid = 50;
 
 const mind = {
    thinking:false,
-   dir: 5,
+   dirY: 5,
+   dirX: 5,
    count: 0
 };
 
@@ -173,16 +174,41 @@ function movmentPlayer(){
          mind.count--;
       }else{
          let val = Math.floor(Math.random()*20);
+         let valX = Math.floor(Math.random()*7);
+         let valY = Math.floor(Math.random() *2)+3;
+         if(valX == 1){
+            mind.dirX = -1;
+         }else if(valX == 2){
+            mind.dirX = 1;
+         }else{
+            mind.dirX = 0;
+         }
         mind.count = 30;
         if(players[1].y +val < players[0].y){
 
-         mind.dir = players[1].speed;
+         mind.dirY = valY;
       }else if(players[1].y + val > players[0].y){
-         mind.dir = -players[1].speed;
+         mind.dirY = -valY;
      
       }
+      if(valY == 2){
+         mind.dirY = 0;
+      }
    }
-   players[1].y += mind.dir;
+
+   if(!(players[1].y > (players[1].size/2) && players[1].y -(players[1].size) < canvas.height)){
+         
+      mind.dirY *= -1;
+      mind.count = 0;
+     
+   }
+   if(!(players[1].x > (players[1].size/2) && players[1].x -(players[1].size) < canvas.width/2 - (players[1].size/2))){
+      mind.dirX *= -1;
+   }
+   players[1].y += mind.dirY;
+
+   //players[1].y += mind.dirY;
+   //players[1].x += mind.dirX;
 
 
      /* if(players[1].y +val < players[0].y){
