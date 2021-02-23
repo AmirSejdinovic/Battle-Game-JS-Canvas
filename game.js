@@ -30,7 +30,7 @@ btn.style.color = 'white';
 btn.style.padding = '10px';
 
 btn.addEventListener('click', (e)=>{
-   console.log(mind);
+   //console.log(mind);
   if(!mind.thinking){
      mind.thinking = true;
      btn.textContent = "Turn Off";
@@ -101,7 +101,7 @@ function startGame(){
 }
 
 document.addEventListener('keydown',(e)=>{
-   console.log(e);
+   //console.log(e);
    if(e.code in keyz){
       keyz[e.code] = true;
    }
@@ -139,8 +139,8 @@ document.addEventListener('keyup',(e)=>{
     //console.log(keyz);
 
     if(e.code == 'KeyM'){
-      console.log(players[0].x, players[0].y);
-      console.log(players[1].x, players[1].y);
+      //console.log(players[0].x, players[0].y);
+      //console.log(players[1].x, players[1].y);
       colDec(players[0],players[1]);
    }
 });
@@ -169,6 +169,21 @@ function movmentPlayer(){
 
 
    if(mind.thinking){
+
+      let shootTime = Math.floor(Math.random() * 5);
+
+         if( shootTime == 1 && players[1].cooldown <= 0){
+            players[1].cooldown = Math.floor(Math.random()* 7) +3;
+            game.bullets.push({
+               x: players[1].x + players[1].size + 15,
+               y: players[1].y - 5,
+               speed: game.bulletSpeed,
+               size: 10,
+               color: 'lightblue'
+            })
+         }
+
+
       
       if(mind.count > 0){
          mind.count--;
@@ -176,7 +191,7 @@ function movmentPlayer(){
          let val = Math.floor(Math.random()*20);
          let valX = Math.floor(Math.random()*7);
          let valY = Math.floor(Math.random() *2)+3;
-         let shootTime = Math.floor(Math.random() * 2);
+         /*let shootTime = Math.floor(Math.random() * 2);
 
          if( shootTime  && players[1].cooldown <= 0){
             game.bullets.push({
@@ -186,7 +201,7 @@ function movmentPlayer(){
                size: 10,
                color: 'lightblue'
             })
-         }
+         }*/
 
 
          if(valX == 1){
@@ -228,7 +243,7 @@ function movmentPlayer(){
       mind.count = 0;
      
    }
-   if(!(players[1].x > (players[1].size/2) && players[1].x -(players[1].size) < canvas.width/2 - (players[1].size/2))){
+   if(!(players[1].x > (players[1].size/2) && players[1].x -(players[1].size) < canvas.width/2 - players[1].size)){
       mind.dirX *= -1;
    }
    players[1].y += mind.dirY;
