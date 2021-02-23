@@ -70,7 +70,7 @@ const players = [
 const game  = {
    req:'',
    bullets:[],
-   bulletSpeed:5
+   bulletSpeed:10
 
 };
 
@@ -176,6 +176,19 @@ function movmentPlayer(){
          let val = Math.floor(Math.random()*20);
          let valX = Math.floor(Math.random()*7);
          let valY = Math.floor(Math.random() *2)+3;
+         let shootTime = Math.floor(Math.random() * 2);
+
+         if( shootTime  && players[1].cooldown <= 0){
+            game.bullets.push({
+               x: players[1].x + players[1].size + 15,
+               y: players[1].y - 5,
+               speed: game.bulletSpeed,
+               size: 10,
+               color: 'lightblue'
+            })
+         }
+
+
          if(valX == 1){
             mind.dirX = -1;
          }else if(valX == 2){
@@ -191,9 +204,22 @@ function movmentPlayer(){
          mind.dirY = -valY;
      
       }
-      if(valY == 2){
+       //incoming bullet check
+       game.bullets.forEach((bull,index)=>{
+          if(bull.speed < 0){
+            console.log('incoming' + bull.y);
+            mind.count = 50;
+            if(bull.y <= players[1].y){
+              mind.diry = -valY;
+            }else{
+               mind.diry = valY;
+            }
+          }
+       });
+
+      /*if(valY == 2){
          mind.dirY = 0;
-      }
+      }*/
    }
 
    if(!(players[1].y > (players[1].size/2) && players[1].y -(players[1].size) < canvas.height)){
